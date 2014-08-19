@@ -68,7 +68,7 @@ class Logger extends AbstractLogger
      * @var integer
      */
     private $defaultPermissions = 0777;
-
+    
     /**
      * Class constructor
      *
@@ -76,7 +76,7 @@ class Logger extends AbstractLogger
      * @param integer $logLevelThreshold  The LogLevel Threshold
      * @return void
      */
-    public function __construct($logDirectory, $logLevelThreshold = LogLevel::DEBUG)
+    public function __construct($logDirectory, $logLevelThreshold = LogLevel::DEBUG, $logBackupFiles = 5)
     {
         $this->logLevelThreshold = $logLevelThreshold;
 
@@ -93,6 +93,14 @@ class Logger extends AbstractLogger
         $this->fileHandle = fopen($this->logFilePath, 'a');
         if ( ! $this->fileHandle) {
             throw new RuntimeException('The file could not be opened. Check permissions.');
+        }
+
+        $files = glob($logDirectory.'/log_*');
+        usort($files, function($a, $b) {
+            return filemtime($a) < filemtime($b);
+        });
+        for ($i = $logBackupFiles; $i < sizeof($files); $i++) {
+            unlink($files[$i]);
         }
     }
 
