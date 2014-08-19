@@ -2,6 +2,9 @@
 
 A project written by [Kenny Katzgrau](http://twitter.com/katzgrau) and [Dan Horrigan](http://twitter.com/dhrrgn).
 
+##Fork created
+* to delete old backup logfiles
+
 ## About
 
 KLogger is an easy-to-use [PSR-3](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md)
