@@ -73,7 +73,8 @@ class Logger extends AbstractLogger
      * Class constructor
      *
      * @param string  $logDirectory       File path to the logging directory
-     * @param integer $logLevelThreshold  The LogLevel Threshold
+     * @param integer $logLevelThreshold  The LogLevel Threshold (default == LogLevel::DEBUG)
+     * @param integer $logBackupFiles  The number of logfiles to keep (default == 5)
      * @return void
      */
     public function __construct($logDirectory, $logLevelThreshold = LogLevel::DEBUG, $logBackupFiles = 5)
@@ -94,14 +95,8 @@ class Logger extends AbstractLogger
         if ( ! $this->fileHandle) {
             throw new RuntimeException('The file could not be opened. Check permissions.');
         }
-
-        $files = glob($logDirectory.'/log_*');
-        usort($files, function($a, $b) {
-            return filemtime($a) < filemtime($b);
-        });
-        for ($i = $logBackupFiles; $i < sizeof($files); $i++) {
-            unlink($files[$i]);
-        }
+        
+        removeObsoleteLogfiles($logDirectory, $logBackupFiles);
     }
 
     /**
@@ -111,6 +106,23 @@ class Logger extends AbstractLogger
     {
         if ($this->fileHandle) {
             fclose($this->fileHandle);
+        }
+    }
+
+    /**
+     * Remove obsolete logfiles
+     * 
+     * @param string $logDirectory Logfile directory
+     * @param string $logBackupFiles The number of logfiles to keep
+     */
+    public function removeObsoleteLogfiles($logDirectory, $logBackupFiles)
+    {
+        $files = glob($logDirectory.'/log_*');
+        usort($files, function($a, $b) {
+            return filemtime($a) < filemtime($b);
+        });
+        for ($i = $logBackupFiles; $i < sizeof($files); $i++) {
+            unlink($files[$i]);
         }
     }
 
