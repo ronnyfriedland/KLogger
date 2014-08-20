@@ -3,7 +3,8 @@
 A project written by [Kenny Katzgrau](http://twitter.com/katzgrau) and [Dan Horrigan](http://twitter.com/dhrrgn).
 
 ##Fork created
-* to delete old backup logfiles
+* to delete old backup logfiles (based on logfile count)
+* add ISO 8601 date format
 
 ## About
 
