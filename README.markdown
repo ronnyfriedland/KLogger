@@ -4,7 +4,7 @@ A project written by [Kenny Katzgrau](http://twitter.com/katzgrau) and [Dan Horr
 
 ##Fork created
 * to delete old backup logfiles (based on logfile count)
-* add ISO 8601 date format
+* ISO 8601 date format with timezone
 
 ## About
 
