@@ -96,7 +96,7 @@ class Logger extends AbstractLogger
             throw new RuntimeException('The file could not be opened. Check permissions.');
         }
         
-        removeObsoleteLogfiles($logDirectory, $logBackupFiles);
+        $this->removeObsoleteLogfiles($logDirectory, $logBackupFiles);
     }
 
     /**
