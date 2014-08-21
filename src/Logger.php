@@ -65,7 +65,7 @@ class Logger extends AbstractLogger
     private $dateFormat = 'Y-m-d G:i:s O';
 
     /**
-     * Timezone to use
+     * Timezone to use (default = Europe/Berlin)
      * @var string
      */
     private $timeZone = 'Europe/Berlin';
@@ -141,6 +141,16 @@ class Logger extends AbstractLogger
     public function setDateFormat($dateFormat)
     {
         $this->dateFormat = $dateFormat;
+    }
+
+    /**
+     * Sets the time zone used by all instances of KLogger
+     * 
+     * @param string $timeZone timezone for date()
+     */
+    public function setTimeZone($timeZone)
+    {
+        $this->timeZone = $timeZone;
     }
 
     /**
