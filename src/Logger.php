@@ -2,6 +2,7 @@
 namespace Katzgrau\KLogger;
 
 use DateTime;
+use DateTimeZone;
 use RuntimeException;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
@@ -61,8 +62,14 @@ class Logger extends AbstractLogger
      * Valid PHP date() format string for log timestamps
      * @var string
      */
-    private $dateFormat = 'Y-m-d G:i:s.u';
+    private $dateFormat = 'Y-m-d G:i:s O';
 
+    /**
+     * Timezone to use
+     * @var string
+     */
+    private $timeZone = 'Europe/Berlin';
+    
     /**
      * Octal notation for default permissions of the log file
      * @var integer
@@ -205,9 +212,8 @@ class Logger extends AbstractLogger
      */
     private function getTimestamp()
     {
-        $originalTime = microtime(true);
-        $date = new DateTime(date('c', $originalTime));
-
+        $date = new DateTime('now');
+        $date->setTimezone(new DateTimeZone($this->timeZone));
         return $date->format($this->dateFormat);
     }
 
