@@ -93,7 +93,9 @@ class Logger extends AbstractLogger
             mkdir($logDirectory, $this->defaultPermissions, true);
         }
 
-        $this->logFilePath = $logDirectory.DIRECTORY_SEPARATOR.'log_'.date('Y-m-d').'.txt';
+        $date = new DateTime('now', new DateTimeZone($this->timeZone));
+
+        $this->logFilePath = $logDirectory.DIRECTORY_SEPARATOR.'log_'.$date->format('Y-m-d').'.txt';
         if (file_exists($this->logFilePath) && !is_writable($this->logFilePath)) {
             throw new RuntimeException('The file could not be written to. Check that appropriate permissions have been set.');
         }
@@ -222,8 +224,7 @@ class Logger extends AbstractLogger
      */
     private function getTimestamp()
     {
-        $date = new DateTime('now');
-        $date->setTimezone(new DateTimeZone($this->timeZone));
+        $date = new DateTime('now', new DateTimeZone($this->timeZone));
         return $date->format($this->dateFormat);
     }
 
